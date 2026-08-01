@@ -1,0 +1,14 @@
+# Constant-quality sweep at a single resolution. CRF sweeps (not bitrate
+# targets) are the fair way to compare codecs: each encoder is asked for a
+# quality level and spends whatever bits it needs, which is exactly what a
+# rate-distortion curve should show. Five points is the minimum for a stable
+# BD-Rate.
+name: crf_sweep_h264
+codec: h264
+description: 720p CRF sweep for codec comparison and BD-Rate
+rungs:
+  - { width: 1280, height: 720, crf: 20 }
+  - { width: 1280, height: 720, crf: 26 }
+  - { width: 1280, height: 720, crf: 32 }
+  - { width: 1280, height: 720, crf: 38 }
+  - { width: 1280, height: 720, crf: 44 }

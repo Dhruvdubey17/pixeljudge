@@ -1,0 +1,17 @@
+# Apple's HLS Authoring Specification reference ladder (H.264, SDR, 16:9).
+# This is the classic "one table for every title" approach: simple, widely
+# deployed, and deliberately conservative. It is our baseline for showing what
+# per-title encoding buys you.
+name: apple_h264
+codec: h264
+description: Fixed Apple HLS reference ladder, H.264, 16:9 SDR
+rungs:
+  - { width: 416, height: 234, bitrate_kbps: 145 }
+  - { width: 640, height: 360, bitrate_kbps: 365 }
+  - { width: 768, height: 432, bitrate_kbps: 730 }
+  - { width: 768, height: 432, bitrate_kbps: 1100, label: 432p_1100k }
+  - { width: 960, height: 540, bitrate_kbps: 2000 }
+  - { width: 1280, height: 720, bitrate_kbps: 3000 }
+  - { width: 1280, height: 720, bitrate_kbps: 4500, label: 720p_4500k }
+  - { width: 1920, height: 1080, bitrate_kbps: 6000 }
+  - { width: 1920, height: 1080, bitrate_kbps: 7800, label: 1080p_7800k }

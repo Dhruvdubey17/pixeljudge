@@ -1,0 +1,48 @@
+# The subjective-quality regression, run on the LIVE-Netflix Video QoE Database
+# (VideoATLAS release). This maps objective metrics onto human opinion and
+# checks whether fusing them beats the best single metric.
+#
+# The one setting here that changes what the results *mean* is `scope`.
+# LIVE-Netflix is a Quality of Experience database: half its playout patterns
+# contain rebuffering, and the human score reflects the stalls as well as the
+# compression. PSNR/SSIM/MS-SSIM/VMAF measure compression distortion and cannot
+# observe a stall at all - the release itself makes this concrete by computing
+# its quality vectors on the stall-removed video, so for those conditions the
+# vectors are literally shorter than the timeline the viewer sat through.
+#
+# So the default keeps only the continuous-playback conditions. Bitrate
+# adaptation stays in (the metrics see it fine, as a dip in per-frame quality);
+# only rebuffering is excluded.
+
+release_dir: data/datasets/LIVE_NFLX_PublicData_VideoATLAS_Release
+split_matrix: data/datasets/TrainingMatrix_LIVENetflix_1000_trials.mat
+
+# compression_only -> the 4 stall-free patterns, 56 videos over 14 contents.
+# all              -> all 112 videos; the result then describes QoE, not
+#                     compression quality, and must be labelled that way.
+scope: compression_only
+
+# The four quality models PixelJudge can also compute itself, which is what
+# makes the Stage 3 "our features vs their features" comparison like-for-like.
+# The release also ships STRRED and NIQE; they are parsed and available, but
+# reproducing them is outside a libvmaf-based pipeline.
+metrics: [vmaf, psnr, ssim, ms_ssim]
+
+# Pooled two ways per metric: the plain mean (what the release's own scripts
+# use, so the numbers stay comparable to the published ones) and libvmaf's
+# harmonic mean (weights the worst frames more heavily, closer to how a viewer
+# remembers a clip). Which one carries the signal is left to the CV to answer.
+poolings: [mean, hmean]
+
+# group_kfold      -> content-grouped 5-fold, exhaustive: every clip held out once.
+# released_splits  -> the release's pre-generated 80/20 content splits, for
+#                     comparability with the published LIVE-Netflix results.
+split_mode: group_kfold
+n_splits: 5
+n_trials: 100
+
+# Single-metric baselines, each given its own logistic fit. The fused model has
+# to beat these to have earned its complexity.
+baselines: [vmaf_mean, psnr_mean, ssim_mean]
+
+random_seed: 1234

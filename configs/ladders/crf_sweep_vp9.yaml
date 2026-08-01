@@ -1,0 +1,16 @@
+# VP9 sweep. libvpx-vp9 needs "-b:v 0" alongside -crf to actually run in
+# constant-quality mode; without it the encoder silently uses a bitrate target.
+# That flag is handled in encode/codecs.py.
+#
+# Like AV1, VP9's CRF response flattens in the middle and then falls away at the
+# top of the scale (CRF 50 gave 687 kbit/s on our 720p master, CRF 63 gave 188), so
+# the sweep runs to 63 to cover the same quality range as the H.264 curve.
+name: crf_sweep_vp9
+codec: vp9
+description: 720p CRF sweep, VP9, quality range matched to the H.264 sweep
+rungs:
+  - { width: 1280, height: 720, crf: 30 }
+  - { width: 1280, height: 720, crf: 40 }
+  - { width: 1280, height: 720, crf: 48 }
+  - { width: 1280, height: 720, crf: 56 }
+  - { width: 1280, height: 720, crf: 63 }

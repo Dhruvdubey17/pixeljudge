@@ -1,0 +1,55 @@
+# Top-level pipeline configuration. Everything the CLI needs that is not a
+# per-command flag lives here, so a run is described by a file you can diff
+# rather than by shell history.
+
+paths:
+  raw: data/raw # pristine master clips (never modified)
+  encoded: data/encoded # distorted ladder rungs
+  metrics: data/metrics # per-frame and pooled metric CSV/JSON
+  datasets: data/datasets # subjective (MOS) datasets
+  reports: reports # plots and tables for the README
+  models: models # trained regressors
+  ladder_dir: configs/ladders
+
+vmaf:
+  vmaf_model: vmaf_v0.6.1 # 1080p-on-a-TV viewing model; report it with every score
+  pool: harmonic_mean # weights the worst frames more heavily than a plain mean
+  features: [psnr, float_ssim, float_ms_ssim]
+  n_threads: 0 # 0 = let libvmaf choose
+  n_subsample: 1 # score every frame
+  enable_cambi: false # Netflix's banding index; opt-in, see artifacts/
+
+encode:
+  preset: medium # x264/x265 speed vs efficiency
+  av1_preset: 8 # SVT-AV1: higher is faster, 8 is a sane default for a laptop
+  vp9_cpu_used: 2
+  gop_seconds: 2.0 # keyframe every 2s, as a segmented stream would need
+  scale_flags: bicubic
+  pix_fmt: yuv420p
+  maxrate_multiplier: 2.0 # rate cap applied in average-bitrate mode
+  bufsize_multiplier: 2.0
+
+# Ladders to run for the platform-comparison report. The three delivery ladders
+# answer "which recipe looks better per bit"; the four CRF sweeps answer "which
+# codec is more efficient", which is a different question and needs constant
+# quality rather than a bitrate target.
+ladders:
+  - apple_h264
+  - netflix_style_hevc
+  - youtube_style_vp9
+  - crf_sweep_h264
+  - crf_sweep_hevc
+  - crf_sweep_vp9
+  - crf_sweep_av1
+
+# Master clips, resolved against paths.raw when not absolute.
+# Built by scripts/download_media.sh (open content) plus scripts/make_fixtures.py
+# (the synthetic gradient, which is the banding test case).
+sources:
+  - big_buck_bunny.mp4
+  - sintel.mp4
+  - jellyfish.mp4
+  - gradient.mp4
+
+artifact_sample_frames: 12
+random_seed: 1234

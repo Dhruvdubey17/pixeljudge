@@ -1,0 +1,16 @@
+# A representative modern HEVC delivery ladder, in the spirit of the fixed
+# ladder Netflix published before it moved to per-title encoding. Bitrates sit
+# roughly 40-50% below the H.264 table at the same resolution, which is the
+# efficiency HEVC is expected to buy. Simulated from public specs: this is not
+# any platform's actual production ladder.
+name: netflix_style_hevc
+codec: hevc
+description: Representative HEVC ladder, ~45% lower bitrates than the H.264 table
+rungs:
+  - { width: 640, height: 360, bitrate_kbps: 220 }
+  - { width: 768, height: 432, bitrate_kbps: 400 }
+  - { width: 960, height: 540, bitrate_kbps: 1100 }
+  - { width: 1280, height: 720, bitrate_kbps: 1750 }
+  - { width: 1280, height: 720, bitrate_kbps: 2500, label: 720p_2500k }
+  - { width: 1920, height: 1080, bitrate_kbps: 3400 }
+  - { width: 1920, height: 1080, bitrate_kbps: 4300, label: 1080p_4300k }

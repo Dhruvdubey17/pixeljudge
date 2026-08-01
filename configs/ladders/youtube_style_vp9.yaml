@@ -1,0 +1,12 @@
+# A representative VP9 delivery ladder in the spirit of YouTube's published
+# recommended bitrates. Simulated from public documentation, not captured from
+# the service.
+name: youtube_style_vp9
+codec: vp9
+description: Representative VP9 ladder based on published recommended bitrates
+rungs:
+  - { width: 640, height: 360, bitrate_kbps: 400 }
+  - { width: 854, height: 480, bitrate_kbps: 750 }
+  - { width: 1280, height: 720, bitrate_kbps: 1500 }
+  - { width: 1920, height: 1080, bitrate_kbps: 3000 }
+  - { width: 1920, height: 1080, bitrate_kbps: 4500, label: 1080p_4500k }

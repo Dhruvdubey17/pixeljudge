@@ -1,0 +1,11 @@
+# A three-rung ladder sized for the 320x180 synthetic fixtures. Its only job is
+# to exercise the whole encode -> measure -> scan path quickly, so the quality
+# steps are deliberately coarse: crf 22 should look fine, crf 44 should fall
+# apart. Widths are omitted so the source aspect ratio is preserved.
+name: fixture_smoke_h264
+codec: h264
+description: Fast smoke ladder for the synthetic 320x180 fixtures
+rungs:
+  - { height: 180, crf: 22 }
+  - { height: 180, crf: 33 }
+  - { height: 144, crf: 44 }

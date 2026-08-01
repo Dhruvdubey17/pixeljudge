@@ -1,0 +1,19 @@
+# AV1 sweep via SVT-AV1. AV1 is the slowest of the four to encode by a wide
+# margin, which is why the preset (encode.av1_preset, default 8) matters: lower
+# presets are more efficient but can be an order of magnitude slower.
+#
+# The CRF values are pushed much higher than the H.264 sweep's for a measured
+# reason, not a guessed one. SVT-AV1's CRF response is strongly non-linear: on our
+# 720p master, CRF 26 to 50 only moved the bitrate from 3.7 Mbit/s to 1.3, while
+# CRF 63 dropped it to 310 kbit/s. A sweep ending at 50 therefore spanned barely
+# four VMAF points and could not overlap the H.264 curve's range, which BD-Rate
+# requires. These values span a comparable quality range.
+name: crf_sweep_av1
+codec: av1
+description: 720p CRF sweep, AV1 (SVT-AV1), quality range matched to the H.264 sweep
+rungs:
+  - { width: 1280, height: 720, crf: 30 }
+  - { width: 1280, height: 720, crf: 40 }
+  - { width: 1280, height: 720, crf: 48 }
+  - { width: 1280, height: 720, crf: 56 }
+  - { width: 1280, height: 720, crf: 63 }

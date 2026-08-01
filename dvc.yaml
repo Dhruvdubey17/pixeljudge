@@ -1,0 +1,81 @@
+# The pipeline as a DAG, so `dvc repro` rebuilds exactly what changed.
+#
+# This file is declarative and useful on its own: it is the shortest accurate
+# description of what depends on what. To actually run it you need DVC initialised,
+# which requires a git repository:
+#
+#   uv sync --extra tracking
+#   git init && uv run dvc init        # DVC stores its state alongside git's
+#   uv run dvc repro
+#
+# Why bother when the CLI already has the same six commands: DVC tracks the
+# *hashes* of inputs and outputs, so editing a ladder YAML re-encodes only what that
+# ladder touches, and editing a detector re-runs the scan without re-encoding
+# anything. On a pipeline whose first stage is hours of CPU, that is the difference
+# between iterating and not.
+#
+# The `fixtures` stage is deliberately first: everything downstream can run on
+# synthetic clips with no downloads, which is how the whole thing stays testable.
+
+stages:
+  fixtures:
+    cmd: python scripts/make_fixtures.py --out tests/fixtures
+    deps:
+      - scripts/make_fixtures.py
+    outs:
+      - tests/fixtures/gradient.mp4
+      - tests/fixtures/checkerboard.mp4
+      - tests/fixtures/motion.mp4
+
+  encode:
+    cmd: pixeljudge encode
+    deps:
+      - src/pixeljudge/encode
+      - src/pixeljudge/config.py
+      - configs/pipeline.yaml
+      - configs/ladders
+      - data/raw
+    outs:
+      - data/encoded
+
+  measure:
+    cmd: pixeljudge measure
+    deps:
+      - src/pixeljudge/metrics/vqm.py
+      - configs/pipeline.yaml
+      - data/encoded
+    outs:
+      - data/metrics/all_metrics.csv
+      - data/metrics/frames
+
+  scan:
+    cmd: pixeljudge scan
+    deps:
+      - src/pixeljudge/artifacts
+      - configs/pipeline.yaml
+      - data/encoded
+    outs:
+      - data/metrics/artifacts.csv
+      - reports/evidence
+
+  # Needs the subjective dataset's media, which is obtained by request: see
+  # DATA_CARD.md. Left in the DAG so the dependency is visible rather than implied.
+  train:
+    cmd: pixeljudge train --features data/metrics/nflx_features.csv
+    deps:
+      - src/pixeljudge/model
+      - data/metrics/nflx_features.csv
+    outs:
+      - models/training_report.json
+      - models/oof_predictions.csv
+
+  report:
+    cmd: pixeljudge report
+    deps:
+      - src/pixeljudge/viz/plots.py
+      - data/metrics/all_metrics.csv
+      - data/metrics/artifacts.csv
+    outs:
+      - reports/rd_curves_ladders_big_buck_bunny.png
+      - reports/bd_rate.csv
+      - reports/ladder_summary.csv

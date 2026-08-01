@@ -1,0 +1,13 @@
+# HEVC counterpart of the H.264 sweep. The CRF numbers are offset because CRF
+# is not a cross-codec scale: the same number means different quality to x264
+# and x265. The offsets are chosen so the resulting VMAF ranges overlap, which
+# BD-Rate requires.
+name: crf_sweep_hevc
+codec: hevc
+description: 720p CRF sweep, HEVC, quality range matched to the H.264 sweep
+rungs:
+  - { width: 1280, height: 720, crf: 22 }
+  - { width: 1280, height: 720, crf: 28 }
+  - { width: 1280, height: 720, crf: 34 }
+  - { width: 1280, height: 720, crf: 40 }
+  - { width: 1280, height: 720, crf: 46 }

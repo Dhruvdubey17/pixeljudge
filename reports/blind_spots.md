@@ -1,0 +1,15 @@
+| distorted | ladder | codec | rung | actual_bitrate_kbps | vmaf | psnr_y | float_ssim | banding_max | reference_banding_mean | banding_delta_mean | banding_delta_max | banding_delta_worst_frame | banding_threshold |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| sintel__apple_h264__432p_1100k.mp4 | apple_h264 | h264 | 432p_1100k | 1208.27 | 93.0784 | 38.816 | 0.9956 | 84.9792 | 52.4278 | 0.5329 | 25.8248 | 66 | 5 |
+| gradient__crf_sweep_h264__720p_crf44.mp4 | crf_sweep_h264 | h264 | 720p_crf44 | 60.29 | 93.2609 | 44.5855 | 0.9944 | 24.9987 | 2.656 | 14.5351 | 21.061 | 81 | 5 |
+| gradient__crf_sweep_av1__720p_crf63.mp4 | crf_sweep_av1 | av1 | 720p_crf63 | 10.25 | 93.4696 | 47.242 | 0.9971 | 19.8764 | 2.656 | 10.5635 | 17.3794 | 143 | 5 |
+| sintel__apple_h264__540p_2000k.mp4 | apple_h264 | h264 | 540p_2000k | 2153.8 | 97.1952 | 40.7542 | 0.9975 | 79.5202 | 52.4278 | 2.2602 | 16.5197 | 66 | 5 |
+| sintel__netflix_style_hevc__432p_400k.mp4 | netflix_style_hevc | hevc | 432p_400k | 486.97 | 88.609 | 38.2413 | 0.9915 | 69.0047 | 52.4278 | -4.7808 | 16.3636 | 138 | 5 |
+| gradient__crf_sweep_hevc__720p_crf46.mp4 | crf_sweep_hevc | hevc | 720p_crf46 | 30.16 | 92.9131 | 44.9397 | 0.9962 | 14.9661 | 2.656 | 7.0025 | 10.946 | 43 | 5 |
+| sintel__apple_h264__432p_730k.mp4 | apple_h264 | h264 | 432p_730k | 819.01 | 90.6298 | 38.3577 | 0.9935 | 72.3293 | 52.4278 | -1.7208 | 10.0159 | 138 | 5 |
+| sintel__netflix_style_hevc__540p_1100k.mp4 | netflix_style_hevc | hevc | 540p_1100k | 1257.87 | 96.629 | 40.6627 | 0.9965 | 72.0093 | 52.4278 | -4.8982 | 8.6748 | 126 | 5 |
+| gradient__apple_h264__234p_145k.mp4 | apple_h264 | h264 | 234p_145k | 126.04 | 95.0879 | 59.7133 | 0.9997 | 12.751 | 2.656 | 5.9126 | 8.6042 | 93 | 5 |
+| gradient__crf_sweep_hevc__720p_crf40.mp4 | crf_sweep_hevc | hevc | 720p_crf40 | 29.18 | 92.8027 | 51.1447 | 0.9976 | 12.1394 | 2.656 | 4.7257 | 7.9926 | 93 | 5 |
+| sintel__crf_sweep_hevc__720p_crf34.mp4 | crf_sweep_hevc | hevc | 720p_crf34 | 362.5 | 90.8687 | 41.2715 | 0.9866 | 68.9768 | 52.4278 | -2.193 | 7.7537 | 90 | 5 |
+| sintel__apple_h264__720p_4500k.mp4 | apple_h264 | h264 | 720p_4500k | 4646.18 | 99.6873 | 50.7241 | 0.999 | 71.3381 | 52.4278 | 2.6969 | 6.9633 | 66 | 5 |
+| gradient__crf_sweep_h264__720p_crf38.mp4 | crf_sweep_h264 | h264 | 720p_crf38 | 73.76 | 92.679 | 52.7323 | 0.9981 | 9.0329 | 2.656 | 3.2593 | 5.3151 | 68 | 5 |

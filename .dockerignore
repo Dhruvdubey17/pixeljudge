@@ -1,0 +1,28 @@
+# Keep the build context small. `data/` alone is hundreds of megabytes of masters and
+# encodes, and every byte of it would be uploaded to the daemon on every build. The
+# container mounts those directories as volumes instead.
+data/
+models/
+reports/
+notebooks/
+
+# Nothing in the image needs the local virtualenv, caches, or git history.
+.venv/
+.git/
+.github/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+mlruns/
+mlartifacts/
+
+# Private study notes, and the OS's opinions.
+LEARNING.md
+.DS_Store
+
+# The test fixtures ARE copied in: the image runs the unit suite at build time, and
+# that suite needs the captured libvmaf log and the synthetic feature table.
