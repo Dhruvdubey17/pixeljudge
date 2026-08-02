@@ -1,10 +1,5 @@
 # PixelJudge
 
-[![ci](https://github.com/Dhruvdubey17/pixeljudge/actions/workflows/ci.yml/badge.svg)](https://github.com/Dhruvdubey17/pixeljudge/actions/workflows/ci.yml)
-![coverage](https://img.shields.io/badge/coverage-82%25-brightgreen)
-![python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
-![licence](https://img.shields.io/badge/licence-MIT-lightgrey)
-
 A full-reference video quality analysis engine. It encodes open master clips
 through real streaming ladders, measures PSNR, SSIM, MS-SSIM and VMAF in a single
 libvmaf pass, compares codec efficiency with BD-Rate, fits a regressor from those
